@@ -29,6 +29,11 @@ export default function App() {
               title: 'Travel Journal',
               headerStyle: {
                 backgroundColor: isDarkMode ? '#1e1e1e' : '#6200ee',
+                elevation: 6, // Subtle shadow for Android
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
               },
               headerTintColor: '#ffffff',
               headerTitleStyle: {
@@ -53,6 +58,11 @@ export default function App() {
               title: 'Add Travel Entry',
               headerStyle: {
                 backgroundColor: isDarkMode ? '#1e1e1e' : '#6200ee',
+                elevation: 6, // Subtle shadow for Android
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
               },
               headerTintColor: '#ffffff',
               headerTitleStyle: {

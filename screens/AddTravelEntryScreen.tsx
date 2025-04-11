@@ -138,10 +138,12 @@ const getStyles = (isDarkMode: boolean) =>
       marginTop: 20,
       marginBottom: 20, // Add spacing below the image
       borderRadius: 10,
+      borderWidth: 1,
+      borderColor: isDarkMode ? '#bb86fc' : '#6200ee',
     },
     takePictureButton: {
       padding: 10,
-      borderRadius: 5,
+      borderRadius: 8,
       alignItems: 'center',
       marginTop: 20,
     },
@@ -152,7 +154,7 @@ const getStyles = (isDarkMode: boolean) =>
     saveButton: {
       marginTop: 20,
       padding: 10,
-      borderRadius: 5,
+      borderRadius: 8,
       alignItems: 'center',
     },
     saveButtonText: {
