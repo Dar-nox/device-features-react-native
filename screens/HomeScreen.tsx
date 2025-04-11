@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, FlatList, Button, Image, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, useColorScheme } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -39,11 +39,9 @@ export default function HomeScreen({ navigation, isDarkMode }: HomeScreenProps) 
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Add Travel Entry"
-        onPress={() => navigation.navigate('AddTravelEntry')}
-        color={isDarkMode ? '#bb86fc' : '#6200ee'}
-      />
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddTravelEntry')}>
+        <Text style={styles.addButtonText}>Add Travel Entry</Text>
+      </TouchableOpacity>
       {entries.length === 0 ? (
         <Text style={styles.noEntries}>No Entries Yet</Text>
       ) : (
@@ -54,11 +52,15 @@ export default function HomeScreen({ navigation, isDarkMode }: HomeScreenProps) 
             <View style={styles.entry}>
               <Image source={{ uri: item.imageUri }} style={styles.image} />
               <Text style={styles.address}>{item.address}</Text>
-              <Button
-                title="Remove"
-                color={isDarkMode ? '#cf6679' : '#d32f2f'}
+              <TouchableOpacity
+                style={[
+                  styles.removeButton,
+                  { backgroundColor: isDarkMode ? '#cf6679' : '#d32f2f' },
+                ]}
                 onPress={() => removeEntry(item.id)}
-              />
+              >
+                <Text style={styles.removeButtonText}>Remove</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -101,5 +103,26 @@ const getStyles = (isDarkMode: boolean) =>
       fontSize: 16,
       color: isDarkMode ? '#e0e0e0' : '#424242',
       marginBottom: 10,
+    },
+    addButton: {
+      backgroundColor: isDarkMode ? '#bb86fc' : '#6200ee',
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    addButtonText: {
+      color: '#ffffff',
+      fontSize: 16,
+    },
+    removeButton: {
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      marginTop: 10,
+    },
+    removeButtonText: {
+      color: '#ffffff',
+      fontSize: 16,
     },
   });

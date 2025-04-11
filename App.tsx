@@ -39,7 +39,7 @@ export default function App() {
                   <Switch
                     value={isDarkMode}
                     onValueChange={() => setIsDarkMode(!isDarkMode)}
-                    thumbColor={isDarkMode ? '#bb86fc' : '#6200ee'}
+                    thumbColor={isDarkMode ? '#bb86fc' : '#ffffff'}
                   />
                 </View>
               ),

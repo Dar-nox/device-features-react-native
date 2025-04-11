@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, Image, StyleSheet, Alert, useColorScheme } from 'react-native';
+import { View, TouchableOpacity, Text, Image, StyleSheet, Alert, useColorScheme, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,6 +13,7 @@ interface AddTravelEntryScreenProps {
 export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTravelEntryScreenProps) {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [loadingAddress, setLoadingAddress] = useState(false);
   const styles = getStyles(isDarkMode);
 
   const takePicture = async () => {
@@ -39,9 +40,11 @@ export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTrav
   };
 
   const getAddress = async (uri: string) => {
+    setLoadingAddress(true);
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       alert('Location permission is required.');
+      setLoadingAddress(false);
       return;
     }
 
@@ -62,6 +65,7 @@ export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTrav
       console.error('Error fetching address:', error);
       alert('An error occurred while retrieving the address.');
     }
+    setLoadingAddress(false);
   };
 
   const saveEntry = async () => {
@@ -95,19 +99,26 @@ export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTrav
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Take Picture"
+      <TouchableOpacity
+        style={[styles.takePictureButton, { backgroundColor: isDarkMode ? '#bb86fc' : '#6200ee' }]}
         onPress={takePicture}
-        color={isDarkMode ? '#bb86fc' : '#6200ee'}
-      />
+      >
+        <Text style={styles.takePictureButtonText}>Take Picture</Text>
+      </TouchableOpacity>
       {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-      {address && (
-        <Button
-          title="Save Entry"
-          onPress={saveEntry}
-          color={isDarkMode ? '#03dac6' : '#018786'}
-          style={styles.saveButton}
-        />
+      {loadingAddress ? (
+        <View style={[styles.saveButton, { backgroundColor: isDarkMode ? '#03dac6' : '#018786' }]}>
+          <ActivityIndicator color="#ffffff" />
+        </View>
+      ) : (
+        address && (
+          <TouchableOpacity
+            style={[styles.saveButton, { backgroundColor: isDarkMode ? '#03dac6' : '#018786' }]}
+            onPress={saveEntry}
+          >
+            <Text style={styles.saveButtonText}>Save Entry</Text>
+          </TouchableOpacity>
+        )
       )}
     </View>
   );
@@ -128,8 +139,25 @@ const getStyles = (isDarkMode: boolean) =>
       marginBottom: 20, // Add spacing below the image
       borderRadius: 10,
     },
+    takePictureButton: {
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      marginTop: 20,
+    },
+    takePictureButtonText: {
+      color: '#ffffff',
+      fontSize: 16,
+    },
     saveButton: {
-      marginTop: 20, // Add spacing above the Save Entry button
+      marginTop: 20,
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+    },
+    saveButtonText: {
+      color: '#ffffff',
+      fontSize: 16,
     },
     buttonSpacing: {
       marginBottom: 20, // Add spacing between buttons
