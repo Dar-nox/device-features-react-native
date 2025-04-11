@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, Image, StyleSheet, Alert, useColorScheme, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Text, Image, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,7 +29,6 @@ export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTrav
     });
 
     if (!result.canceled) {
-      console.log('ImagePicker result:', result); // Log the result for debugging
       if (result.assets && result.assets[0] && result.assets[0].uri) {
         setImageUri(result.assets[0].uri);
         getAddress(result.assets[0].uri);
@@ -50,10 +49,7 @@ export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTrav
 
     try {
       const location = await Location.getCurrentPositionAsync({});
-      console.log('Location result:', location); // Log the location for debugging
-
       const addressData = await Location.reverseGeocodeAsync(location.coords);
-      console.log('Reverse geocode result:', addressData); // Log the address data for debugging
 
       if (addressData && addressData.length > 0) {
         const formattedAddress = `${addressData[0].name || 'Unknown'}, ${addressData[0].city || 'Unknown'}, ${addressData[0].region || 'Unknown'}`;
@@ -62,7 +58,6 @@ export default function AddTravelEntryScreen({ navigation, isDarkMode }: AddTrav
         alert('Unable to retrieve address. Please try again.');
       }
     } catch (error) {
-      console.error('Error fetching address:', error);
       alert('An error occurred while retrieving the address.');
     }
     setLoadingAddress(false);
@@ -129,14 +124,14 @@ const getStyles = (isDarkMode: boolean) =>
     container: {
       flex: 1,
       padding: 20,
-      justifyContent: 'flex-start', // Align items at the top
+      justifyContent: 'flex-start',
       backgroundColor: isDarkMode ? '#121212' : '#f5f5f5',
     },
     image: {
       width: '100%',
       height: 200,
       marginTop: 20,
-      marginBottom: 20, // Add spacing below the image
+      marginBottom: 20,
       borderRadius: 10,
       borderWidth: 1,
       borderColor: isDarkMode ? '#bb86fc' : '#6200ee',
@@ -162,6 +157,6 @@ const getStyles = (isDarkMode: boolean) =>
       fontSize: 16,
     },
     buttonSpacing: {
-      marginBottom: 20, // Add spacing between buttons
+      marginBottom: 20,
     },
   });

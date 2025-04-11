@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, StyleSheet, StatusBar, Switch } from 'react-native'; // Added Switch import
+import { View, StyleSheet, StatusBar, Switch } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import AddTravelEntryScreen from './screens/AddTravelEntryScreen';
 
@@ -13,7 +13,7 @@ export default function App() {
   const styles = StyleSheet.create({
     appContainer: {
       flex: 1,
-      backgroundColor: isDarkMode ? '#121212' : '#f5f5f5', // Dynamic background color
+      backgroundColor: isDarkMode ? '#121212' : '#f5f5f5',
       paddingTop: StatusBar.currentHeight,
     },
   });
@@ -29,7 +29,7 @@ export default function App() {
               title: 'Travel Journal',
               headerStyle: {
                 backgroundColor: isDarkMode ? '#1e1e1e' : '#6200ee',
-                elevation: 6, // Subtle shadow for Android
+                elevation: 6,
                 shadowColor: '#000',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.2,
@@ -58,7 +58,7 @@ export default function App() {
               title: 'Add Travel Entry',
               headerStyle: {
                 backgroundColor: isDarkMode ? '#1e1e1e' : '#6200ee',
-                elevation: 6, // Subtle shadow for Android
+                elevation: 6,
                 shadowColor: '#000',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.2,
